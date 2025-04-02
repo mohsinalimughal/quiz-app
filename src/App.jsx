@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-
+import './App.css';
 
 function App() {
   const [data , setdata] = useState([])
   const [ques , setques] = useState("")
   const [quesnum , setquesnum] = useState(0)
   const [ans , setans] = useState([])
+  const [score , setscore] = useState(0)
   
   
   const getdata = async ()=>{
@@ -26,11 +27,10 @@ function App() {
 
 const answerclicked = (item)=>{
   if(item === data[quesnum].correctAnswer){
-    alert('correct')
     changeques()
+    setscore(score + 1)
   }
   else{
-    alert('wrong')
     changeques()
   }
 }
@@ -51,25 +51,29 @@ const changeques = (()=>{
   },[])
 
   return (
-    <>
-<h1>{ques}</h1>
-{
-
-ans.map((item)=>{
-return <><button onClick={()=>{
-  answerclicked(item)
-}} >{item}</button></>
-})
-
-
-}
-<br/>
-<button onClick={changeques}>next</button>
-
-
-
-    </>
-  )
+    <div className="quiz-container">
+      <h1 className="quiz-heading">Trivia Quiz</h1>
+      <div className="quiz-question">{ques}</div>
+      
+      <div className="options-container">
+        {ans.map((item) => (
+          
+  <>
+  <label htmlFor="">
+  <input type="radio" id="html" name="fav_language" value="HTML"></input>{item}</label>
+  </>
+          
+        ))}
+      </div>
+      
+      <button 
+        className="next-button"
+        onClick={changeques}
+      >
+        Next Question
+      </button>
+    </div>
+  );
 }
 
 export default App
